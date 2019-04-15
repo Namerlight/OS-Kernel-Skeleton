@@ -1,22 +1,22 @@
 [bits 16]
-
-switch:
-    cli
-    lgdt [gdtdesc]
+switch_to_pm:
+    cli ; 1. disable interrupts
+    lgdt [gdtdesc] ; 2. load the GDT descriptor
     mov eax, cr0
-    or eax, 0x1
+    or eax, 0x1 ; 3. set 32-bit mode bit in cr0
     mov cr0, eax
-    jmp codeseg:init
+    jmp codesegment:init_pm ; 4. far jump by using a different segment
 
 [bits 32]
-
-init:
-    mov ax, dataseg
+init_pm: ; we are now using 32-bit instructions
+    mov ax, datasegment ; 5. update the segment registers
     mov ds, ax
     mov ss, ax
     mov es, ax
     mov fs, ax
     mov gs, ax
-    mov ebp, 0x90000
+
+    mov ebp, 0x90000 ; 6. update the stack right at the top of the free space
     mov esp, ebp
-    call startprog
+
+    call BEGIN_PM ; 7. Call a well-known label with useful code

@@ -9,6 +9,7 @@ Ideally, this would've been a fully functional skeleton for an Operating System,
 To run this, make sure you have qemu installed. Go to the terminal and enter 
 
 > qemu-system-x86_64 32.bin
+
 > qemu-system-x85_64 OS.bin
 
 To run the 16-32-bit switcher and the OS kernel program respectively. If they don't work, you may need to use nasm to recompile the files.
